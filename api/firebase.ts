@@ -2,8 +2,6 @@ import { initializeApp } from "firebase/app";
 import { getDatabase, ref } from "firebase/database";
 import { FIREBASE_API_KEY } from "../firebase.json";
 
-console.log(FIREBASE_API_KEY);
-
 const firebaseConfig = {
   apiKey: FIREBASE_API_KEY,
   authDomain: "expenses-tracker-d30eb.firebaseapp.com",
