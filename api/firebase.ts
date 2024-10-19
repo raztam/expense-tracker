@@ -1,8 +1,11 @@
 import { initializeApp } from "firebase/app";
 import { getDatabase, ref } from "firebase/database";
+import { FIREBASE_API_KEY } from "../firebase.json";
+
+console.log(FIREBASE_API_KEY);
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCPAXNCeOXc7J1V8_eqhHiMMWWgTcUbEL8",
+  apiKey: FIREBASE_API_KEY,
   authDomain: "expenses-tracker-d30eb.firebaseapp.com",
   databaseURL:
     "https://expenses-tracker-d30eb-default-rtdb.europe-west1.firebasedatabase.app",
