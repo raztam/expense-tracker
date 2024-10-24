@@ -5,7 +5,7 @@ import useUpdateExpense from "../../api/useUpdateExpense";
 import expenseSchema from "./expensesSchema";
 import Input from "./Input";
 import Button from "../UI/Button";
-import { getFormattedDate } from "../../util/date.js";
+import { getFormattedDate } from "../../util/date";
 
 interface ExpenseFormProps {
   isEditing: boolean;
