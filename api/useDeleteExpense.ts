@@ -1,4 +1,4 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { remove, ref } from "firebase/database";
 import { database, expensesUrl } from "./firebase";
 
@@ -8,7 +8,14 @@ const useDeleteExpense = () => {
     await remove(expenseRef);
   };
 
-  return useMutation({ mutationFn: deleteExpense });
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: deleteExpense,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["expenses"] });
+    },
+  });
 };
 
 export default useDeleteExpense;
