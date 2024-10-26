@@ -28,6 +28,12 @@ const ExpenseForm: FC<ExpenseFormProps> = (props) => {
 
   type InputType = "amount" | "date" | "description";
 
+  type InputFields = {
+    amount: string;
+    date: string;
+    description: string;
+  };
+
   type ErrorsType = {
     amount: string[];
     date: string[];
@@ -38,7 +44,7 @@ const ExpenseForm: FC<ExpenseFormProps> = (props) => {
   const { mutate: updateExpense, isPending: isUpdating } = useUpdateExpense();
 
   //object to store the input values
-  const [inputValues, setInputValues] = useState({
+  const [inputValues, setInputValues] = useState<InputFields>({
     amount: amount,
     date: date,
     description: description,

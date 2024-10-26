@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getDatabase, ref } from "firebase/database";
-import { FIREBASE_API_KEY } from "../firebase.json";
+import { FIREBASE_API_KEY } from "@env";
 
 const firebaseConfig = {
   apiKey: FIREBASE_API_KEY,
@@ -18,4 +18,4 @@ export const database = getDatabase(app);
 
 //Expenses ref
 export const expensesUrl = "/expanses";
-export const expensesRef = ref(database, "/expanses");
+export const expensesRef = ref(database, expensesUrl);
