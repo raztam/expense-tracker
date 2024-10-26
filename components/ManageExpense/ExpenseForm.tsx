@@ -43,18 +43,20 @@ const ExpenseForm: FC<ExpenseFormProps> = (props) => {
   const { mutate: addExpense, isPending: isAdding } = useAddExpense();
   const { mutate: updateExpense, isPending: isUpdating } = useUpdateExpense();
 
-  const { inputValues, inputChangeHandler, isError, errors, validateForm } =
-    useForm(initialValues, expenseSchema);
+  const { inputValues, inputChangeHandler, errors, validateForm } = useForm(
+    initialValues,
+    expenseSchema
+  );
 
   const handleCancel = () => {
     closeModal();
   };
 
   const handleSave = () => {
-    validateForm();
-    console.log("errors", errors);
+    const result = validateForm();
+    console.log("result", result);
     // if there are errors, return
-    if (isError) {
+    if (!result) {
       console.log("errors from if", errors);
       return;
     }

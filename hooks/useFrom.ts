@@ -12,7 +12,6 @@ const useForm = (
 ) => {
   const [inputValues, setInputValues] = useState(initialValues);
   const [errors, setErrors] = useState<ErrorsType>({});
-  const [isError, setIsError] = useState(false);
 
   const inputChangeHandler = (input: string, enteredValue: string) => {
     setInputValues((prevInputValues: typeof initialValues) => {
@@ -28,12 +27,10 @@ const useForm = (
   for that field. and set the errors state with the new errors object.
   */
   const validateForm = () => {
-    setIsError(false);
     console.log("errors start", errors);
     console.log("inputValues", inputValues);
     const result = validationSchema.safeParse(inputValues);
     if (!result.success) {
-      setIsError(true);
       const newErrors: ErrorsType = {};
       result.error.errors.forEach((err) => {
         const field = err.path[0] as string;
@@ -45,13 +42,13 @@ const useForm = (
       console.log("newErrors", newErrors);
       setErrors(newErrors);
     }
+    return result.success;
   };
 
   return {
     inputValues,
     inputChangeHandler,
     errors,
-    isError,
     validateForm,
   };
 };
