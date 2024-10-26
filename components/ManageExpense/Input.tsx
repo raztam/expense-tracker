@@ -22,11 +22,13 @@ interface InputProps {
     multiline?: boolean;
     autoFocus?: boolean;
   };
-  errors: string[];
+  errors?: string[];
 }
 
 const Input: FC<InputProps> = (props) => {
   const { label, style, textInputConfig, errors } = props;
+
+  console.log("errors from input", errors);
 
   return (
     <View style={[styles.inputContainer, style]}>
@@ -38,7 +40,7 @@ const Input: FC<InputProps> = (props) => {
         ]}
         {...textInputConfig}
       ></TextInput>
-      <Text style={{ color: "red" }}>{errors[0]}</Text>
+      {errors && <Text style={{ color: "red" }}>{errors[0]}</Text>}
     </View>
   );
 };
