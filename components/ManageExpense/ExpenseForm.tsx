@@ -1,7 +1,8 @@
 import { View, Text, StyleSheet } from "react-native";
-import React, { FC, useState, useContext } from "react";
+import { FC } from "react";
 import useAddExpense from "../../api/useAddExpense";
 import useUpdateExpense from "../../api/useUpdateExpense";
+import useForm from "../../hooks/useFrom";
 import expenseSchema from "./expensesSchema";
 import Input from "./Input";
 import Button from "../UI/Button";
@@ -26,54 +27,35 @@ const ExpenseForm: FC<ExpenseFormProps> = (props) => {
     closeModal,
   } = props;
 
-  type InputType = "amount" | "date" | "description";
-
   type InputFields = {
     amount: string;
     date: string;
     description: string;
   };
 
-  type ErrorsType = {
-    amount: string[];
-    date: string[];
-    description: string[];
+  //initial values for the form
+  const initialValues: InputFields = {
+    amount: amount,
+    date: date,
+    description: description,
   };
 
   const { mutate: addExpense, isPending: isAdding } = useAddExpense();
   const { mutate: updateExpense, isPending: isUpdating } = useUpdateExpense();
 
-  //object to store the input values
-  const [inputValues, setInputValues] = useState<InputFields>({
-    amount: amount,
-    date: date,
-    description: description,
-  });
-
-  // object to store the errors
-  const [errors, setErrors] = useState<ErrorsType>({
-    amount: [],
-    date: [],
-    description: [],
-  });
+  const { inputValues, inputChangeHandler, isError, errors, validateForm } =
+    useForm(initialValues, expenseSchema);
 
   const handleCancel = () => {
     closeModal();
   };
 
   const handleSave = () => {
-    const result = expenseSchema.safeParse(inputValues);
-    if (!result.success) {
-      const newErrors: ErrorsType = {
-        amount: [],
-        date: [],
-        description: [],
-      };
-      result.error.errors.forEach((err) => {
-        const field = err.path[0] as keyof ErrorsType;
-        newErrors[field].push(err.message);
-      });
-      setErrors(newErrors);
+    validateForm();
+    console.log("errors", errors);
+    // if there are errors, return
+    if (isError) {
+      console.log("errors from if", errors);
       return;
     }
     const { description, amount, date } = inputValues;
@@ -97,15 +79,6 @@ const ExpenseForm: FC<ExpenseFormProps> = (props) => {
     closeModal();
   };
 
-  const inputChangeHandler = (input: InputType, enteredValue: string) => {
-    setInputValues((prevInputValues) => {
-      return {
-        ...prevInputValues,
-        [input]: enteredValue,
-      };
-    });
-  };
-
   return (
     <View style={styles.form}>
       <Text style={styles.title}>Your Expense</Text>
@@ -119,7 +92,7 @@ const ExpenseForm: FC<ExpenseFormProps> = (props) => {
             value: inputValues.amount,
             autoFocus: true,
           }}
-          errors={errors.amount}
+          errors={errors?.amount}
         />
         <Input
           label="Date"
@@ -129,7 +102,7 @@ const ExpenseForm: FC<ExpenseFormProps> = (props) => {
             onChangeText: inputChangeHandler.bind(this, "date"),
             value: inputValues.date,
           }}
-          errors={errors.date}
+          errors={errors?.date}
         />
       </View>
       <Input
@@ -139,7 +112,7 @@ const ExpenseForm: FC<ExpenseFormProps> = (props) => {
           value: inputValues.description,
           multiline: true,
         }}
-        errors={errors.description}
+        errors={errors?.description}
       />
       <View style={styles.buttons}>
         <Button mode="flat" style={styles.button} onPress={handleCancel}>
