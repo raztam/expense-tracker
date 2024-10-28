@@ -14,6 +14,10 @@ const Layout = () => {
           headerTintColor: "black",
         }}
       >
+        <Stack.Screen name="Login" options={{ headerShown: false }} />
+
+        <Stack.Screen name="SingUp" options={{ headerShown: false }} />
+
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
 
         <Stack.Screen
