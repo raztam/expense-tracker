@@ -10,7 +10,7 @@ import {
 import React, { FC } from "react";
 import { GlobalStyles } from "../../constants/styles";
 
-interface InputProps {
+export interface InputProps {
   label: string;
   style?: StyleProp<ViewStyle>;
   textInputConfig: {
@@ -27,8 +27,6 @@ interface InputProps {
 
 const Input: FC<InputProps> = (props) => {
   const { label, style, textInputConfig, errors } = props;
-
-  console.log("errors from input", errors);
 
   return (
     <View style={[styles.inputContainer, style]}>

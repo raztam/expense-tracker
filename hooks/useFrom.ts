@@ -27,8 +27,6 @@ const useForm = (
   for that field. and set the errors state with the new errors object.
   */
   const validateForm = () => {
-    console.log("errors start", errors);
-    console.log("inputValues", inputValues);
     const result = validationSchema.safeParse(inputValues);
     if (!result.success) {
       const newErrors: ErrorsType = {};
@@ -39,7 +37,6 @@ const useForm = (
         }
         newErrors[field].push(err.message);
       });
-      console.log("newErrors", newErrors);
       setErrors(newErrors);
     }
     return result.success;

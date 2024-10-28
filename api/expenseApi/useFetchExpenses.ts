@@ -1,7 +1,7 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { get, onValue } from "firebase/database";
-import { Expense, ExpenseData } from "../data/expenseType";
-import { expensesRef } from "./firebase";
+import { Expense, ExpenseData } from "../../data/expenseType";
+import { expensesRef } from "../firebase";
 import { useEffect } from "react";
 
 const useFetchExpenses = () => {

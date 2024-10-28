@@ -1,10 +1,10 @@
 import { View, Text, StyleSheet } from "react-native";
 import { FC } from "react";
-import useAddExpense from "../../api/useAddExpense";
-import useUpdateExpense from "../../api/useUpdateExpense";
+import useAddExpense from "../../api/expenseApi/useAddExpense";
+import useUpdateExpense from "../../api/expenseApi/useUpdateExpense";
 import useForm from "../../hooks/useFrom";
 import expenseSchema from "./expensesSchema";
-import Input from "./Input";
+import Input from "../UI/Input";
 import Button from "../UI/Button";
 import { getFormattedDate } from "../../util/date";
 
@@ -54,7 +54,6 @@ const ExpenseForm: FC<ExpenseFormProps> = (props) => {
 
   const handleSave = () => {
     const result = validateForm();
-    console.log("result", result);
     // if there are errors, return
     if (!result) {
       console.log("errors from if", errors);

@@ -3,7 +3,7 @@ import { GlobalStyles } from "../../constants/styles";
 import ExpensesOutput from "../../components/ExpensesOutput/ExpansesOutput";
 import Loading from "../../components/Loading";
 import { getDateMinusDays } from "../../util/date";
-import useFetchExpenses from "../../api/useFetchExpenses";
+import useFetchExpenses from "../../api/expenseApi/useFetchExpenses";
 
 const recentExpenses = () => {
   const { expenses, isFetching } = useFetchExpenses();

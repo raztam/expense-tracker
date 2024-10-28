@@ -2,7 +2,7 @@ import { View, Text, Pressable } from "react-native";
 import React, { useContext } from "react";
 import { GlobalStyles } from "../../constants/styles";
 import ExpensesOutput from "../../components/ExpensesOutput/ExpansesOutput";
-import useFetchExpenses from "../../api/useFetchExpenses";
+import useFetchExpenses from "../../api/expenseApi/useFetchExpenses";
 import Loading from "../../components/Loading";
 
 const allExpenses = () => {

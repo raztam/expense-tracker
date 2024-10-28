@@ -4,7 +4,7 @@ import { useLocalSearchParams, useNavigation } from "expo-router";
 import { GlobalStyles } from "../constants/styles";
 import IconButton from "../components/UI/IconButton";
 import ExpenseForm from "../components/ManageExpense/ExpenseForm";
-import useDeleteExpense from "../api/useDeleteExpense";
+import useDeleteExpense from "../api/expenseApi/useDeleteExpense";
 import Loading from "../components/Loading";
 
 const manageExpenses = () => {
