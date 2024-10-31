@@ -21,6 +21,7 @@ export interface InputProps {
     maxLength?: number;
     multiline?: boolean;
     autoFocus?: boolean;
+    secureTextEntry?: boolean;
   };
   errors?: string[];
 }

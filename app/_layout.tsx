@@ -9,14 +9,14 @@ const Layout = () => {
       <StatusBar barStyle="dark-content" />
       <Stack
         screenOptions={{
-          headerStyle: { backgroundColor: GlobalStyles.colors.primary100 },
+          headerStyle: { backgroundColor: GlobalStyles.colors.primary500 },
           headerTitleAlign: "center",
           headerTintColor: "black",
         }}
       >
-        <Stack.Screen name="Login" options={{ headerShown: false }} />
+        <Stack.Screen name="index" options={{ headerShown: false }} />
 
-        <Stack.Screen name="SingUp" options={{ headerShown: false }} />
+        <Stack.Screen name="singup" options={{ headerShown: false }} />
 
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
 

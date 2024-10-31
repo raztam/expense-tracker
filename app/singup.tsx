@@ -1,17 +1,17 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import LoginForm from "../components/UserVerification/LoginForm";
+import SignUpForm from "../components/UserVerification/SingUpForm";
 import { GlobalStyles } from "../constants/styles";
 
-const Login = () => {
+const SingUp = () => {
   return (
     <View style={styles.container}>
-      <LoginForm />
+      <SignUpForm />
     </View>
   );
 };
 
-export default Login;
+export default SingUp;
 
 const styles = StyleSheet.create({
   container: {
