@@ -1,5 +1,7 @@
 import { StyleSheet, Text, View } from "react-native";
+import { useContext } from "react";
 import { GlobalStyles } from "../../constants/styles";
+import { AuthContext } from "../../context/authContext";
 import loginSchema from "./loginSchema";
 import Button from "../UI/Button";
 import Input from "../UI/Input";
@@ -13,12 +15,12 @@ import { useRouter } from "expo-router";
 const LoginForm = () => {
   const router = useRouter();
 
-  type FormInput = {
+  type FormInputType = {
     email: string;
     password: string;
   };
 
-  const inputFields: FormInput = {
+  const inputFields: FormInputType = {
     email: "",
     password: "",
   };
@@ -27,22 +29,32 @@ const LoginForm = () => {
     inputFields,
     loginSchema
   );
-
-  const loginHandler = () => {
+  const { authenticate } = useContext(AuthContext);
+  const loginHandler = async () => {
+    // validate form
     const isValid = validateForm();
     if (!isValid) {
       return;
     }
-    useLoginUser(inputValues.email, inputValues.password);
-
-    router.push({
-      pathname: "(tabs)",
+    // login user
+    const authToken = await useLoginUser(
+      inputValues.email,
+      inputValues.password
+    );
+    // if user is not authenticated return
+    if (!authToken) {
+      return;
+    }
+    // if user is authenticated set auth token and redirect to recentExpenses
+    authenticate(authToken);
+    router.replace({
+      pathname: "recentExpenses",
     });
   };
 
   const signUpHandler = () => {
     router.push({
-      pathname: "/singup",
+      pathname: "singup",
     });
   };
 

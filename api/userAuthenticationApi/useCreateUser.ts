@@ -8,9 +8,9 @@ export const useCreateUser = async (email: string, password: string) => {
       email,
       password
     );
-    return userCredential;
+    return await userCredential.user.getIdToken();
   } catch (error) {
-    return error;
+    return false;
   }
 };
 

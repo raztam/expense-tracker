@@ -7,7 +7,9 @@ import { GlobalStyles } from "../../constants/styles";
 import signupSchema from "./singupShcema";
 import useCreateUser from "../../api/userAuthenticationApi/useCreateUser";
 import useForm from "../../hooks/useFrom";
-import React from "react";
+import React, { useContext } from "react";
+import { AuthContext } from "../../context/authContext";
+import { auth } from "../../api/firebase";
 
 const SignUpForm = () => {
   type formInput = {
@@ -27,16 +29,29 @@ const SignUpForm = () => {
     signupSchema
   );
 
+  const { authenticate } = useContext(AuthContext);
+
   const router = useRouter();
 
-  const signUpHandler = () => {
+  const signUpHandler = async () => {
+    // validate form
     const isValid = validateForm();
     if (!isValid) {
       return;
     }
-    useCreateUser(inputValues.email, inputValues.password);
-    router.push({
-      pathname: "(tabs)",
+    // create user
+    const authToken = await useCreateUser(
+      inputValues.email,
+      inputValues.password
+    );
+    // if user is not created return
+    if (!authToken) {
+      return;
+    }
+    // if user is created set auth token and redirect to recentExpenses
+    authenticate(authToken);
+    router.replace({
+      pathname: "recentExpenses",
     });
   };
 
