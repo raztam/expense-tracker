@@ -6,6 +6,7 @@ import useForm from "../../hooks/useFrom";
 import expenseSchema from "./expensesSchema";
 import Input from "../UI/Input";
 import Button from "../UI/Button";
+import Title from "../UI/Title";
 import { getFormattedDate } from "../../util/date";
 
 interface ExpenseFormProps {
@@ -56,7 +57,6 @@ const ExpenseForm: FC<ExpenseFormProps> = (props) => {
     const result = validateForm();
     // if there are errors, return
     if (!result) {
-      console.log("errors from if", errors);
       return;
     }
     const { description, amount, date } = inputValues;
@@ -82,7 +82,7 @@ const ExpenseForm: FC<ExpenseFormProps> = (props) => {
 
   return (
     <View style={styles.form}>
-      <Text style={styles.title}>Your Expense</Text>
+      <Title>Your Expense</Title>
       <View style={styles.inputsRow}>
         <Input
           label="Amount"

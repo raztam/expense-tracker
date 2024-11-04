@@ -1,15 +1,19 @@
 import { useMutation } from "@tanstack/react-query";
-import { update, ref, getDatabase } from "firebase/database";
-import { database, expensesUrl } from "../firebase";
+import { update, ref } from "firebase/database";
+import { buildUserExpenseItemReference } from "../firebase";
 import { ExpenseData } from "../../data/expenseType";
+import { useContext } from "react";
+import { AuthContext } from "../../context/authContext";
 
 const useUpdateExpense = () => {
+  const { userId } = useContext(AuthContext);
   const updateExpense = async (
     id: string,
     data: ExpenseData
   ): Promise<void> => {
-    const expenseRef = ref(database, `${expensesUrl}/${id}`);
-    await update(expenseRef, data);
+    const userExpenseRef = buildUserExpenseItemReference(userId, id);
+
+    await update(userExpenseRef, data);
   };
 
   return useMutation({

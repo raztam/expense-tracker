@@ -1,6 +1,5 @@
 import React, { FC, useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-import { StyleProp, ViewStyle } from "react-native";
 import Input, { InputProps } from "./Input"; // Adjust the import path as necessary
 
 interface PasswordInputProps extends InputProps {}

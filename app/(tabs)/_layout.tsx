@@ -1,12 +1,15 @@
-import { View, Text } from "react-native";
+import { View, Text, Pressable } from "react-native";
 import { Tabs } from "expo-router";
 import { useRouter } from "expo-router";
+import { useContext } from "react";
+import { AuthContext } from "../../context/authContext";
 import { GlobalStyles } from "../../constants/styles";
 import IconButton from "../../components/UI/IconButton";
 import { Ionicons } from "@expo/vector-icons";
 
 const TabsLayout = () => {
   const router = useRouter();
+  const { logout } = useContext(AuthContext);
   return (
     <Tabs
       screenOptions={{
@@ -25,10 +28,17 @@ const TabsLayout = () => {
             }}
           />
         ),
+        headerLeft: ({ tintColor }) => (
+          <Pressable onPress={logout}>
+            <Text style={{ color: "red", fontWeight: "bold", marginLeft: 10 }}>
+              logout
+            </Text>
+          </Pressable>
+        ),
       }}
     >
       <Tabs.Screen
-        name="index"
+        name="recentExpenses"
         options={{
           title: "Recent Expenses",
           tabBarLabel: "Recent",

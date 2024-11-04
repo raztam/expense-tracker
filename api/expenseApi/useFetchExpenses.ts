@@ -1,11 +1,14 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { get, onValue } from "firebase/database";
+import { get, onValue, ref } from "firebase/database";
 import { Expense, ExpenseData } from "../../data/expenseType";
-import { expensesRef } from "../firebase";
-import { useEffect } from "react";
+import { database, expensesUrl } from "../firebase";
+import { useEffect, useContext } from "react";
+import { AuthContext } from "../../context/authContext";
 
 const useFetchExpenses = () => {
   const queryClient = useQueryClient();
+  const { userId } = useContext(AuthContext);
+  const userExpenseRef = ref(database, expensesUrl + "/" + userId);
 
   const formatData = (data: Record<string, ExpenseData>): Expense[] => {
     return Object.keys(data).map((key) => ({
@@ -15,7 +18,7 @@ const useFetchExpenses = () => {
   };
 
   const fetchExpenses = async (): Promise<Expense[]> => {
-    const snapshot = await get(expensesRef);
+    const snapshot = await get(userExpenseRef);
     if (snapshot.exists()) {
       const data = snapshot.val();
       return formatData(data);
@@ -34,7 +37,7 @@ const useFetchExpenses = () => {
   });
 
   useEffect(() => {
-    const unsubscribe = onValue(expensesRef, (snapshot) => {
+    const unsubscribe = onValue(userExpenseRef, (snapshot) => {
       if (snapshot.exists()) {
         queryClient.setQueryData<Expense[]>(
           ["expenses"],
