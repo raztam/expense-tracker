@@ -1,11 +1,14 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { remove, ref } from "firebase/database";
-import { database, expensesUrl } from "../firebase";
+import { buildUserExpenseItemReference } from "../firebase";
+import { useContext } from "react";
+import { AuthContext } from "../../context/authContext";
 
 const useDeleteExpense = () => {
+  const { userId } = useContext(AuthContext);
   const deleteExpense = async (id: string): Promise<void> => {
-    const expenseRef = ref(database, `${expensesUrl}/${id}`);
-    await remove(expenseRef);
+    const userExpenseRef = buildUserExpenseItemReference(userId, id);
+    await remove(userExpenseRef);
   };
 
   const queryClient = useQueryClient();

@@ -37,16 +37,13 @@ const LoginForm = () => {
       return;
     }
     // login user
-    const authToken = await useLoginUser(
-      inputValues.email,
-      inputValues.password
-    );
+    const user = await useLoginUser(inputValues.email, inputValues.password);
     // if user is not authenticated return
-    if (!authToken) {
+    if (!user) {
       return;
     }
     // if user is authenticated set auth token and redirect to recentExpenses
-    authenticate(authToken);
+    authenticate(user);
     router.replace({
       pathname: "recentExpenses",
     });

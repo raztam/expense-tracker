@@ -18,6 +18,16 @@ const app = initializeApp(firebaseConfig);
 export const database = getDatabase(app);
 export const auth = getAuth(app);
 
-//Expenses ref
-export const expensesUrl = "/expanses";
-export const expensesRef = ref(database, expensesUrl);
+export const expensesUrl = "/expenses";
+
+// Utility funcs
+export const buildUserExpenseReference = (userId: string) => {
+  return ref(database, expensesUrl + "/" + userId);
+};
+
+export const buildUserExpenseItemReference = (
+  userId: string,
+  expenseId: string
+) => {
+  return ref(database, `${expensesUrl}/${userId}/${expenseId}`);
+};

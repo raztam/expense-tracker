@@ -40,16 +40,13 @@ const SignUpForm = () => {
       return;
     }
     // create user
-    const authToken = await useCreateUser(
-      inputValues.email,
-      inputValues.password
-    );
+    const user = await useCreateUser(inputValues.email, inputValues.password);
     // if user is not created return
-    if (!authToken) {
+    if (!user) {
       return;
     }
     // if user is created set auth token and redirect to recentExpenses
-    authenticate(authToken);
+    authenticate(user);
     router.replace({
       pathname: "recentExpenses",
     });

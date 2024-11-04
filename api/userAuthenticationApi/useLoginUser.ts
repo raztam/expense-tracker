@@ -8,7 +8,7 @@ export const useLoginUser = async (email: string, password: string) => {
       email,
       password
     );
-    return await userCredential.user.getIdToken();
+    return userCredential.user;
   } catch (error) {
     return false;
   }
