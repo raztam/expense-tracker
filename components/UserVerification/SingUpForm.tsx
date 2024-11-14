@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View } from "react-native";
 import { useRouter } from "expo-router";
 import Input from "../UI/Input";
+import PasswordInput from "../UI/PasswordInput";
 import Button from "../UI/Button";
 import Title from "../UI/Title";
 import { GlobalStyles } from "../../constants/styles";
@@ -63,7 +64,7 @@ const SignUpForm = () => {
         }}
         errors={errors.email}
       />
-      <Input
+      <PasswordInput
         label="Password"
         textInputConfig={{
           value: inputValues.password,
@@ -71,7 +72,7 @@ const SignUpForm = () => {
         }}
         errors={errors.password}
       />
-      <Input
+      <PasswordInput
         label="Confirm Password"
         textInputConfig={{
           value: inputValues.confirmPassword,

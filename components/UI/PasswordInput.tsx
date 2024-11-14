@@ -1,6 +1,7 @@
 import React, { FC, useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-import Input, { InputProps } from "./Input"; // Adjust the import path as necessary
+import Input, { InputProps } from "./Input";
+import { Ionicons } from "@expo/vector-icons";
 
 interface PasswordInputProps extends InputProps {}
 
@@ -27,10 +28,13 @@ const withPasswordToggle = (WrappedComponent: FC<InputProps>) => {
         <TouchableOpacity
           onPress={togglePasswordVisibility}
           style={styles.toggleButton}
+          hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
         >
-          <Text style={styles.toggleText}>
-            {isPasswordVisible ? "Hide" : "Show"}
-          </Text>
+          <Ionicons
+            name={isPasswordVisible ? 'eye-off' : 'eye'}
+            size={24}
+            color="#666"
+          />
         </TouchableOpacity>
       </View>
     );

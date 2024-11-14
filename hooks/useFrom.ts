@@ -1,4 +1,3 @@
-import { set } from "firebase/database";
 import { useState } from "react";
 import { ZodSchema } from "zod";
 
@@ -22,7 +21,7 @@ const useForm = (
     });
   };
 
-  /* 
+  /*
   for each input field push the error message(if exists) to the string of errors
   for that field. and set the errors state with the new errors object.
   */

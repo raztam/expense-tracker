@@ -68,7 +68,7 @@ const LoginForm = () => {
           }}
           errors={errors.email}
         />
-        <Input
+        <PasswordInput
           label="password"
           style={{}}
           textInputConfig={{
@@ -110,5 +110,14 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginTop: 20,
     alignSelf: "center",
+    // Shadow properties
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5, // for Android
   },
 });
