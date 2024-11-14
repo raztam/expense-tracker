@@ -1,5 +1,6 @@
-import { View, Text, StyleSheet } from "react-native";
-import { FC } from "react";
+import { View, Text, StyleSheet, Pressable } from "react-native";
+import { FC, useState } from "react";
+import DatePicker from 'react-native-date-picker';
 import useAddExpense from "../../api/expenseApi/useAddExpense";
 import useUpdateExpense from "../../api/expenseApi/useUpdateExpense";
 import useForm from "../../hooks/useFrom";
@@ -19,6 +20,8 @@ interface ExpenseFormProps {
 }
 
 const ExpenseForm: FC<ExpenseFormProps> = (props) => {
+  const [openDatePicker, setOpenDatePicker] = useState(false);
+
   const {
     isEditing,
     expenseId,
@@ -80,6 +83,15 @@ const ExpenseForm: FC<ExpenseFormProps> = (props) => {
     closeModal();
   };
 
+  const handleOpenDatePicker = () => {
+    setOpenDatePicker(true);
+  };
+
+  const handleDateChange = (selectedDate: Date) => {
+    setOpenDatePicker(false);
+    inputChangeHandler('date', getFormattedDate(selectedDate));
+  };
+
   return (
     <View style={styles.form}>
       <Title>Your Expense</Title>
@@ -100,10 +112,12 @@ const ExpenseForm: FC<ExpenseFormProps> = (props) => {
           style={styles.rowInput}
           textInputConfig={{
             maxLength: 10,
-            onChangeText: inputChangeHandler.bind(this, "date"),
             value: inputValues.date,
+            editable: false,
+            onChangeText: () => {}
           }}
           errors={errors?.date}
+          onPress={handleOpenDatePicker}
         />
       </View>
       <Input
@@ -123,6 +137,14 @@ const ExpenseForm: FC<ExpenseFormProps> = (props) => {
           {isEditing ? "Update" : "Add"}
         </Button>
       </View>
+      <DatePicker
+        modal
+        open={openDatePicker}
+        date={new Date()}
+        mode="date"
+        onConfirm={handleDateChange}
+        onCancel={() => setOpenDatePicker(false)}
+      />
     </View>
   );
 };
