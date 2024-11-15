@@ -31,7 +31,7 @@ const withPasswordToggle = (WrappedComponent: FC<InputProps>) => {
           hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
         >
           <Ionicons
-            name={isPasswordVisible ? 'eye-off' : 'eye'}
+            name={isPasswordVisible ? "eye-off" : "eye"}
             size={24}
             color="#666"
           />
@@ -52,14 +52,18 @@ const styles = StyleSheet.create({
     marginHorizontal: 4,
     marginVertical: 8,
     position: "relative",
+    minHeight: 80,
   },
   input: {
     flex: 1,
+    height: 50,
   },
   toggleButton: {
     position: "absolute",
     right: 10,
-    top: 35,
+    top: "50%",
+    transform: [{ translateY: -5 }], // Changed from -12 to -8 to better center the icon
+    zIndex: 1,
   },
   toggleText: {
     color: "blue",
