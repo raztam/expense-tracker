@@ -6,8 +6,6 @@ import {
   KeyboardTypeOptions,
   StyleProp,
   ViewStyle,
-  TextStyle,
-  Pressable,
 } from "react-native";
 import React, { FC } from "react";
 import { GlobalStyles } from "../../constants/styles";
@@ -23,36 +21,25 @@ export interface InputProps {
     maxLength?: number;
     multiline?: boolean;
     autoFocus?: boolean;
-    editable?: boolean;
     secureTextEntry?: boolean;
   };
   errors?: string[];
-  onPress?: () => void;
 }
 
 const Input: FC<InputProps> = (props) => {
-  const { label, style, textInputConfig, errors, onPress } = props;
-  const inputStyles: StyleProp<TextStyle>[] = [styles.input];
-  if (textInputConfig && textInputConfig.multiline) {
-    inputStyles.push(styles.inputMultiline);
-  }
-
-  const content = <TextInput style={inputStyles} {...textInputConfig} />;
+  const { label, style, textInputConfig, errors } = props;
 
   return (
     <View style={[styles.inputContainer, style]}>
       <Text style={styles.label}>{label}</Text>
-      {onPress ? (
-        <Pressable onPress={onPress}>{content}</Pressable>
-      ) : (
-        content
-      )}
-      {errors &&
-        errors.map((error) => (
-          <Text key={error} style={{ color: "red" }}>
-            {error}
-          </Text>
-        ))}
+      <TextInput
+        style={[
+          styles.input,
+          textInputConfig.multiline && styles.inputMultiline,
+        ]}
+        {...textInputConfig}
+      ></TextInput>
+      {errors && <Text style={{ color: "red" }}>{errors[0]}</Text>}
     </View>
   );
 };
