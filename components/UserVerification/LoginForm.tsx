@@ -12,9 +12,9 @@ import useLoginUser from "../../api/userAuthenticationApi/useLoginUser";
 import useForm from "../../hooks/useFrom";
 import { useRouter } from "expo-router";
 
-const LoginForm = () => {
-  const router = useRouter();
+const router = useRouter();
 
+const LoginForm = () => {
   type FormInputType = {
     email: string;
     password: string;
@@ -25,11 +25,16 @@ const LoginForm = () => {
     password: "",
   };
 
-  const { inputValues, inputChangeHandler, errors, validateForm } = useForm(
-    inputFields,
-    loginSchema
-  );
+  const {
+    inputValues,
+    inputChangeHandler,
+    errors,
+    setAuthError,
+    validateForm,
+  } = useForm(inputFields, loginSchema);
+
   const { authenticate } = useContext(AuthContext);
+
   const loginHandler = async () => {
     // validate form
     const isValid = validateForm();
@@ -37,13 +42,17 @@ const LoginForm = () => {
       return;
     }
     // login user
-    const user = await useLoginUser(inputValues.email, inputValues.password);
-    // if user is not authenticated return
-    if (!user) {
+    const result = await useLoginUser(
+      inputValues.email.trim(),
+      inputValues.password.trim()
+    );
+    // If result is a string them its an error, set error and return
+    if (!result || typeof result === "string") {
+      setAuthError(result as string);
       return;
     }
     // if user is authenticated set auth token and redirect to recentExpenses
-    authenticate(user);
+    authenticate(result);
     router.replace({
       pathname: "recentExpenses",
     });
@@ -110,7 +119,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginTop: 20,
     alignSelf: "center",
-    // Shadow properties
     shadowColor: "#000",
     shadowOffset: {
       width: 0,

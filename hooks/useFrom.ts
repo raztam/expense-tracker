@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { ZodSchema } from "zod";
+import { translateFirebaseAuthError } from "../util/errors";
 
 type ErrorsType = {
   [key: string]: string[];
@@ -41,10 +42,16 @@ const useForm = (
     return result.success;
   };
 
+  const setAuthError = (message: string) => {
+    const errorObject = translateFirebaseAuthError(message);
+    setErrors({ [errorObject.field]: [errorObject.message] });
+  };
+
   return {
     inputValues,
     inputChangeHandler,
     errors,
+    setAuthError,
     validateForm,
   };
 };

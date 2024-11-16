@@ -10,7 +10,6 @@ import useCreateUser from "../../api/userAuthenticationApi/useCreateUser";
 import useForm from "../../hooks/useFrom";
 import React, { useContext } from "react";
 import { AuthContext } from "../../context/authContext";
-import { auth } from "../../api/firebase";
 
 const SignUpForm = () => {
   type formInput = {
@@ -25,10 +24,13 @@ const SignUpForm = () => {
     confirmPassword: "",
   };
 
-  const { inputValues, inputChangeHandler, errors, validateForm } = useForm(
-    inputFields,
-    signupSchema
-  );
+  const {
+    inputValues,
+    inputChangeHandler,
+    errors,
+    setAuthError,
+    validateForm,
+  } = useForm(inputFields, signupSchema);
 
   const { authenticate } = useContext(AuthContext);
 
@@ -41,13 +43,14 @@ const SignUpForm = () => {
       return;
     }
     // create user
-    const user = await useCreateUser(inputValues.email, inputValues.password);
-    // if user is not created return
-    if (!user) {
+    const result = await useCreateUser(inputValues.email, inputValues.password);
+    // If result is a string them its an error, set error and return
+    if (!result || typeof result === "string") {
+      setAuthError(result as string);
       return;
     }
     // if user is created set auth token and redirect to recentExpenses
-    authenticate(user);
+    authenticate(result);
     router.replace({
       pathname: "recentExpenses",
     });
@@ -112,5 +115,13 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginTop: 20,
     alignSelf: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5, // for Android
   },
 });
