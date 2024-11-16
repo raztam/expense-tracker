@@ -1,5 +1,5 @@
 import { auth } from "../firebase";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, AuthError } from "firebase/auth";
 
 export const useCreateUser = async (email: string, password: string) => {
   try {
@@ -10,7 +10,8 @@ export const useCreateUser = async (email: string, password: string) => {
     );
     return userCredential.user;
   } catch (error) {
-    return false;
+    const authError = error as AuthError;
+    return authError.message;
   }
 };
 
