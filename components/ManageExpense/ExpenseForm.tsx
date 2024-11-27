@@ -99,6 +99,7 @@ const ExpenseForm: FC<ExpenseFormProps> = (props) => {
           label="Date"
           style={styles.rowInput}
           textInputConfig={{
+            keyboardType: "decimal-pad",
             maxLength: 10,
             onChangeText: inputChangeHandler.bind(this, "date"),
             value: inputValues.date,
