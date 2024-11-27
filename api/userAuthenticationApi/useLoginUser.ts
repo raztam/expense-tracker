@@ -11,7 +11,8 @@ export const useLoginUser = async (email: string, password: string) => {
     return userCredential.user;
   } catch (error) {
     const authError = error as AuthError;
-    return authError.message;
+    console.log(authError.code);
+    return authError.code;
   }
 };
 

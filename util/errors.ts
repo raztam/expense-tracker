@@ -6,17 +6,12 @@ interface AuthError {
 export function translateFirebaseAuthError(errorCode: string): AuthError {
   switch (errorCode) {
     // Email-related errors
-    case "Firebase: Error (auth/email-already-in-use).":
+    case "auth/email-already-in-use)":
       return { field: "email", message: "This email is already in use" };
-    case "Firebase: Error (auth/invalid-credential).":
+    case "auth/user-not-found":
       return { field: "email", message: "No account found with this email" };
 
     // Password-related errors
-    case "auth/weak-password":
-      return {
-        field: "password",
-        message: "Password should be at least 6 characters",
-      };
     case "auth/wrong-password":
       return { field: "password", message: "Incorrect password" };
     case "auth/requires-recent-login":
